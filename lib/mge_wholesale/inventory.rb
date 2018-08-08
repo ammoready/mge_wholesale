@@ -55,7 +55,7 @@ module MgeWholesale
     def map_hash(node)
       {
         item_identifier: content_for(node, 'id'),
-        quantity:        content_for(node, 'qty'),
+        quantity:        content_for(node, 'qty').to_i,
         price:           content_for(node, 'cost')
       }
     end

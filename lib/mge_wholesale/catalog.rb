@@ -72,7 +72,7 @@ module MgeWholesale
         name:              content_for(node, 'name'),
         upc:               content_for(node, 'barcod'),
         item_identifier:   content_for(node, 'id'),
-        quantity:          content_for(node, 'qty'),
+        quantity:          content_for(node, 'qty').to_i,
         price:             content_for(node, 'price'),
         short_description: content_for(node, 'description'),
         category:          content_for(node, 'category'),
