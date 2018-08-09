@@ -68,6 +68,24 @@ module MgeWholesale
     def map_hash(node)
       features = map_features(node)
 
+      category = content_for(node, 'category')
+      subcategory = content_for(node, 'subCategory')
+
+      case category
+      when 'Firearms'
+        case subcategory
+        when 'Pistol', 'Revolver'
+          product_type = :handgun
+        when 'Rifle', 'Rifle Frame', 'Shotgun', 'Short Barrel Rifle'
+          product_type = :rifle
+        end
+      when 'NFA - Class 3'
+        case subcategory
+        when 'Suppressors'
+          product_type = :suppressor
+        end
+      end
+
       {
         name:              content_for(node, 'name'),
         upc:               content_for(node, 'barcod'),
@@ -75,8 +93,9 @@ module MgeWholesale
         quantity:          content_for(node, 'qty').to_i,
         price:             content_for(node, 'price'),
         short_description: content_for(node, 'description'),
-        category:          content_for(node, 'category'),
-        subcategory:       content_for(node, 'subCategory'),
+        product_type:      product_type,
+        category:          category,
+        subcategory:       subcategory,
         mfg_number:        content_for(node, 'vendorItemNo'),
         weight:            content_for(node, 'Weight'),
         brand:             content_for(node, 'Brand'),
