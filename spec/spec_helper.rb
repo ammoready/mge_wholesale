@@ -14,12 +14,8 @@ RSpec.configure do |config|
   # configure options for dummy FTP connection
   config.before(:suite) do
     MgeWholesale.configure do |config|
-      config.ftp_host       = "ftp.host.com"
-      config.top_level_dir  = "Test"
-      config.submission_dir = "toBHC"
-      config.response_dir   = "fromBHC"
+      config.ftp_host      = "ftp.host.com"
+      config.top_level_dir = "Test"
     end
   end
-
-  config.include SampleFiles
 end

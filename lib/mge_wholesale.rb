@@ -1,5 +1,6 @@
 require 'mge_wholesale/version'
 
+require 'csv'
 require 'net/ftp'
 require 'tempfile'
 
@@ -8,17 +9,13 @@ require 'nokogiri'
 require 'active_support/all'
 
 require 'mge_wholesale/base'
-require 'mge_wholesale/ftp'
 require 'mge_wholesale/catalog'
 require 'mge_wholesale/category'
 require 'mge_wholesale/inventory'
-#require 'mge_wholesale/order'
-#require 'mge_wholesale/response_file'
+require 'mge_wholesale/order'
 require 'mge_wholesale/user'
-#require 'mge_wholesale/brand_converter'
 
 module MgeWholesale
-  #TODO: handle orders
   class InvalidOrder < StandardError; end
   class NotAuthenticated < StandardError; end
 
@@ -37,24 +34,12 @@ module MgeWholesale
   class Configuration
     attr_accessor :debug_mode
     attr_accessor :ftp_host
-    attr_accessor :response_dir
-    attr_accessor :submission_dir
     attr_accessor :top_level_dir
 
     def initialize
-      @debug_mode     ||= false
-      @ftp_host       ||= "ftp.mgegroup.com"
-      @top_level_dir  ||= "ffldealer"
-      @submission_dir ||= ""
-      @response_dir   ||= ""
-    end
-
-    def full_submission_dir
-      File.join(@top_level_dir, @submission_dir)
-    end
-
-    def full_response_dir
-      File.join(@top_level_dir, @response_dir)
+      @debug_mode    ||= false
+      @ftp_host      ||= "ftp.mgegroup.com"
+      @top_level_dir ||= "ffldealer"
     end
   end
 end

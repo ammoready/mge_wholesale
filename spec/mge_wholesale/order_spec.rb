@@ -1,54 +1,73 @@
-# require 'spec_helper'
+require 'spec_helper'
 
-# describe MgeWholesale::Order do
+describe MgeWholesale::Order do
 
-#   let(:credentials) { { username: 'login', password: 'password' } }
-#   let(:default_header) do
-#     {
-#       customer:       '12345',
-#       purchase_order: '1000-300',
-#       ffl:            '12-aa-bb-1234',
-#       shipping: {
-#         name:      'Joe',
-#         address_1: '123 Cherry Lane',
-#         address_2: '',
-#         city:      'Sunnyville',
-#         state:     'SC',
-#         zip:       '12345'
-#       }
-#     }
-#   end
+  let(:credentials) { { username: '100001' } }
+  let(:recipient) do
+    {
+      dealer_name: 'Night Ninja',
+      ffl:         '12-aa-bb-1234',
+      shipping: {
+        name:    'Gretchen Manerly',
+        address: '123 Grizzly Ln.',
+        city:    'Sunnyville',
+        state:   'SC',
+        zip:     '29600',
+        email:   'email@example.com',
+        phone:   '888-999-1234'
+      }
+    }
+  end
 
-#   before do
-#     ftp = instance_double('Net::FTP', :passive= => true, :debug_mode= => true)
-#     allow(ftp).to receive(:chdir).with('Test/toBHC') { true }
-#     allow(ftp).to receive(:puttextfile) { '' }
-#     allow(Net::FTP).to receive(:open).with('ftp.host.com', 'login', 'password') { |&block| block.call(ftp) }
-#     allow(ftp).to receive(:close)
-#   end
+  describe '#add_recipient' do
+    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100-200')) }
 
-#   describe '#add_header' do
-#     let(:order) { MgeWholesale::Order.new(credentials) }
+    before do
+      order.add_recipient(recipient)
+    end
 
-#     before do
-#       order.add_header(default_header)
-#     end
+    it { expect(order.filename).to match(/MGE-100200-#{Time.now.strftime('%Y%m%d')}/) }
+  end
 
-#     it { expect(order.instance_variable_get(:@header)[:customer]).to eq('12345') }
-#     it { expect(order.instance_variable_get(:@header)[:purchase_order]).to eq('1000-300') }
-#     it { expect(order.instance_variable_get(:@header)[:shipping][:name]).to eq('Joe') }
-#     it { expect(order.instance_variable_get(:@header)[:shipping][:address_2]).to eq(nil) }
-#   end
+  describe '#add_item' do
+    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100-300')) }
+    let(:item) {
+      {
+        identifier: 'EE00011',
+        description: 'Cool Mag',
+        upc: '123000000001',
+        qty: 1,
+        price: '100.40',
+      }
+    }
 
-#   describe '#submit!' do
-#     let(:order) { MgeWholesale::Order.new(credentials) }
+    before do
+      order.add_recipient(recipient)
+      order.add_item(item)
+    end
 
-#     before do
-#       order.add_header(default_header)
-#       order.add_item(item_number: 'ABCD', quantity: 1, price: '9.99')
-#     end
+    it { expect(order.instance_variable_get(:@items).length).to eq(1) }
+  end
 
-#     it { expect(order.submit!).to eq(true) }
-#   end
+  describe '#to_csv' do
+    let(:sample_order) { FixtureHelper.get_fixture_file('sample_order.csv').read }
+    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100-400')) }
+    let(:item) {
+      {
+        identifier: 'EE00011',
+        description: 'Cool Mag',
+        upc: '123000000001',
+        qty: 1,
+        price: '195.00',
+      }
+    }
 
-# end
+    before do
+      order.add_recipient(recipient)
+      order.add_item(item)
+    end
+
+    it { expect(order.to_csv).to eq(sample_order) }
+  end
+
+end
