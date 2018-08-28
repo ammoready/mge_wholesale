@@ -20,17 +20,17 @@ describe MgeWholesale::Order do
   end
 
   describe '#add_recipient' do
-    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100-200')) }
+    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100')) }
 
     before do
       order.add_recipient(recipient)
     end
 
-    it { expect(order.filename).to match(/MGE-100200-#{Time.now.strftime('%Y%m%d')}/) }
+    it { expect(order.filename).to match(/MGE-100-#{Time.now.strftime('%Y%m%d')}/) }
   end
 
   describe '#add_item' do
-    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100-300')) }
+    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100')) }
     let(:item) {
       {
         identifier: 'EE00011',
@@ -51,7 +51,7 @@ describe MgeWholesale::Order do
 
   describe '#to_csv' do
     let(:sample_order) { FixtureHelper.get_fixture_file('sample_order.csv').read }
-    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100-400')) }
+    let(:order) { MgeWholesale::Order.new(credentials.merge(po_number: '100')) }
     let(:item) {
       {
         identifier: 'EE00011',

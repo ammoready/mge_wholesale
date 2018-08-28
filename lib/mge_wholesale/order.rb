@@ -68,7 +68,7 @@ module MgeWholesale
     def filename
       return @filename if defined?(@filename)
       timestamp = Time.now.strftime('%Y%m%d%T').gsub(':', '')
-      @filename = "MGE-#{@po_number.gsub('-', '')}-#{timestamp}.csv"
+      @filename = "MGE-#{@po_number}-#{timestamp}.csv"
     end
 
     def to_csv
