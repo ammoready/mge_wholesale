@@ -56,12 +56,12 @@ module MgeWholesale
 
     # @param item [Hash]
     #   * :identifier [String] *required*
-    #   * :description [String] *required*
+    #   * :description [String]
     #   * :upc [String] *required*
     #   * :qty [Integer] *required*
-    #   * :price [String] *required*
+    #   * :price [String]
     def add_item(item = {})
-      requires!(item, :identifier, :description, :upc, :qty, :price,)
+      requires!(item, :identifier, :upc, :qty)
       @items << item
     end
 
