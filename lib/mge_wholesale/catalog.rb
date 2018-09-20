@@ -99,6 +99,7 @@ module MgeWholesale
         mfg_number:        content_for(node, 'vendorItemNo'),
         weight:            content_for(node, 'Weight'),
         brand:             content_for(node, 'Brand'),
+        caliber:           content_for(node, 'Caliber') || content_for(node, 'Caliber_Gauge'),
         features:          features
       }
     end
