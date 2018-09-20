@@ -77,7 +77,7 @@ module MgeWholesale
         when 'Pistol', 'Revolver'
           product_type = :handgun
         when 'Rifle', 'Rifle Frame', 'Shotgun', 'Short Barrel Rifle'
-          product_type = :rifle
+          product_type = :long_gun
         end
       when 'NFA - Class 3'
         case subcategory
