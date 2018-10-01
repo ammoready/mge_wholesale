@@ -1,3 +1,3 @@
 module MgeWholesale
-  VERSION = '1.0.4'.freeze
+  VERSION = '3.0.0.pre'.freeze
 end

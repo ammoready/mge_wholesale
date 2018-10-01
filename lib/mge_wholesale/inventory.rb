@@ -1,7 +1,8 @@
 module MgeWholesale
   class Inventory < Base
 
-    INVENTORY_FILENAME = 'exportXML_cq_barcodeFFL.xml'
+    INVENTORY_FILENAME = 'exportXML_cq_barcodeFFL.csv'.freeze
+    FULL_INVENTORY_FILENAME = 'exportXML_cq_barcodeFFL_all.csv'.freeze
 
     def initialize(options = {})
       requires!(options, :username, :password)
@@ -13,51 +14,40 @@ module MgeWholesale
       new(options).all(&block)
     end
 
-    def self.get_quantity_file(options = {})
-      requires!(options, :username, :password)
-      new(options).get_quantity_file
-    end
-
     def self.quantity(options = {}, &block)
       requires!(options, :username, :password)
-      new(options).all(&block)
+      new(options).quantity(&block)
     end
 
     def all(&block)
       tempfile = get_file(INVENTORY_FILENAME)
 
-      Nokogiri::XML(tempfile).xpath('//item').each do |item|
-        yield map_hash(item)
+      CSV.foreach(tempfile, { headers: :first_row }).each do |row|
+        item = {
+          item_identifier: row['id'],
+          quantity:        row['qty'].to_i,
+          price:           row['cost'],
+        }
+
+        yield(item)
       end
 
-      tempfile.close
       tempfile.unlink
     end
 
-    def get_quantity_file
-      inventory_tempfile = get_file(INVENTORY_FILENAME)
-      tempfile           = Tempfile.new
+    def quantity(&block)
+      tempfile = get_file(FULL_INVENTORY_FILENAME)
 
-      Nokogiri::XML(inventory_tempfile).xpath('//item').each do |item|
-        tempfile.puts("#{content_for(item, 'id')},#{content_for(item, 'qty')}")
+      CSV.foreach(tempfile, { headers: :first_row }).each do |row|
+        item = {
+          item_identifier: row['id'],
+          quantity:        row['qty'].to_i,
+        }
+
+        yield(item)
       end
 
-      inventory_tempfile.close
-      inventory_tempfile.unlink
-      tempfile.close
-      tempfile.path
-    end
-
-    alias quantity all
-
-    private
-
-    def map_hash(node)
-      {
-        item_identifier: content_for(node, 'id'),
-        quantity:        content_for(node, 'qty').to_i,
-        price:           content_for(node, 'cost')
-      }
+      tempfile.unlink
     end
 
   end
