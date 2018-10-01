@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require 'rspec'
 require 'pp'
 
-require "mge_wholesale"
+require 'mge_wholesale'
 
 # support files
 root = File.expand_path('../..', __FILE__)
@@ -18,4 +18,6 @@ RSpec.configure do |config|
       config.top_level_dir = "Test"
     end
   end
+
+  config.include FixtureHelper
 end

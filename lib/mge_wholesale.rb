@@ -4,7 +4,6 @@ require 'csv'
 require 'net/ftp'
 require 'tempfile'
 
-# these can be commented out when the gem is bundled into a Rails app
 require 'nokogiri'
 require 'active_support/all'
 
