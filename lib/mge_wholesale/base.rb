@@ -48,12 +48,12 @@ module MgeWholesale
       end
     end
 
-    def get_file(filename)
+    def get_file(filename, file_directory = nil)
       connect(@options) do |ftp|
         begin
           tempfile = Tempfile.new
 
-          ftp.chdir(MgeWholesale.config.top_level_dir)
+          ftp.chdir(file_directory || MgeWholesale.config.top_level_dir)
           ftp.getbinaryfile(filename, tempfile.path)
 
           tempfile
