@@ -12,6 +12,7 @@ require 'mge_wholesale/catalog'
 require 'mge_wholesale/category'
 require 'mge_wholesale/inventory'
 require 'mge_wholesale/order'
+require 'mge_wholesale/tracking'
 require 'mge_wholesale/user'
 
 module MgeWholesale
