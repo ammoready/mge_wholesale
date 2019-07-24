@@ -13,8 +13,13 @@ module MgeWholesale
           ftp.close
         end
       end
-    rescue Net::FTPPermError
-      raise MgeWholesale::NotAuthenticated
+    rescue Net::FTPPermError => e
+      raise case
+      when e.message =~ /no such file or directory/i
+        MgeWholesale::FileOrDirectoryNotFound
+      else
+        MgeWholesale::NotAuthenticated
+      end
     end
 
     protected

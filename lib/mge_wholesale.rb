@@ -18,6 +18,7 @@ require 'mge_wholesale/user'
 module MgeWholesale
   class InvalidOrder < StandardError; end
   class NotAuthenticated < StandardError; end
+  class FileOrDirectoryNotFound < StandardError; end
 
   class << self
     attr_accessor :config
