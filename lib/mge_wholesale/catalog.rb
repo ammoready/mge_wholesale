@@ -44,23 +44,28 @@ module MgeWholesale
       @options = options
     end
 
-    def self.all(options = {}, &block)
+    def self.all(options = {})
       requires!(options, :username, :password)
-      new(options).all(&block)
+      new(options).all
     end
 
-    def all(&block)
+    def all
       tempfile = get_file(CATALOG_FILENAME)
+      items = []
 
       Nokogiri::XML::Reader.from_io(tempfile).each do |node|
         next unless node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
         next unless node.name == ITEM_NODE_NAME
 
-        yield map_hash(Nokogiri::XML::DocumentFragment.parse(node.inner_xml))
+        _map_hash = map_hash(Nokogiri::XML::DocumentFragment.parse(node.inner_xml))
+
+        items << _map_hash unless _map_hash.nil?
       end
 
       tempfile.close
       tempfile.unlink
+
+      items
     end
 
     protected
