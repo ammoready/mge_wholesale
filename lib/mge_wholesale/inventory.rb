@@ -9,17 +9,18 @@ module MgeWholesale
       @options = options
     end
 
-    def self.all(options = {}, &block)
+    def self.all(options = {})
       requires!(options, :username, :password)
-      new(options).all(&block)
+      new(options).all
     end
 
-    def self.quantity(options = {}, &block)
+    def self.quantity(options = {})
       requires!(options, :username, :password)
-      new(options).quantity(&block)
+      new(options).quantity
     end
 
-    def all(&block)
+    def all
+      items    = []
       tempfile = get_file(INVENTORY_FILENAME)
 
       CSV.foreach(tempfile, { headers: :first_row }).each do |row|
@@ -29,13 +30,16 @@ module MgeWholesale
           price:           row['cost'],
         }
 
-        yield(item)
+        items << item
       end
 
       tempfile.unlink
+
+      items
     end
 
-    def quantity(&block)
+    def quantity
+      items    = []
       tempfile = get_file(FULL_INVENTORY_FILENAME)
 
       CSV.foreach(tempfile, { headers: :first_row }).each do |row|
@@ -44,10 +48,12 @@ module MgeWholesale
           quantity:        row['qty'].to_i,
         }
 
-        yield(item)
+        items << item
       end
 
       tempfile.unlink
+
+      items
     end
 
   end
