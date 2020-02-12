@@ -1,12 +1,12 @@
-module Orion
+module MgeWholesale
   class Base
 
     def self.connect(options = {})
       requires!(options, :username, :password)
 
-      Net::FTP.open(Orion.config.ftp_host, options[:username], options[:password]) do |ftp|
+      Net::FTP.open(MgeWholesale.config.ftp_host, options[:username], options[:password]) do |ftp|
         begin
-          ftp.debug_mode = Orion.config.debug_mode
+          ftp.debug_mode = MgeWholesale.config.debug_mode
           ftp.passive = true
           yield ftp
         ensure
@@ -16,9 +16,9 @@ module Orion
     rescue Net::FTPPermError => e
       raise case
       when e.message =~ /no such file or directory/i
-        Orion::FileOrDirectoryNotFound
+        MgeWholesale::FileOrDirectoryNotFound
       else
-        Orion::NotAuthenticated
+        MgeWholesale::NotAuthenticated
       end
     end
 
@@ -58,7 +58,7 @@ module Orion
         begin
           tempfile = Tempfile.new
 
-          ftp.chdir(file_directory || Orion.config.top_level_dir)
+          ftp.chdir(file_directory || MgeWholesale.config.top_level_dir)
           ftp.getbinaryfile(filename, tempfile.path)
 
           tempfile

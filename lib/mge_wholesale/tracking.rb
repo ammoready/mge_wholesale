@@ -1,4 +1,4 @@
-module Orion
+module MgeWholesale
   class Tracking < Base
 
     BASE_TRACKING_FILE_DIRECTORY = "%s-TRACK".freeze

@@ -1,4 +1,4 @@
-module Orion
+module MgeWholesale
   class Catalog < Base
 
     CATALOG_FILENAME = 'vendorname_items.xml'

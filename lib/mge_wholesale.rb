@@ -1,4 +1,4 @@
-require 'orion/version'
+require 'mge_wholesale/version'
 
 require 'csv'
 require 'net/ftp'
@@ -7,15 +7,15 @@ require 'tempfile'
 require 'nokogiri'
 require 'active_support/all'
 
-require 'orion/base'
-require 'orion/catalog'
-require 'orion/category'
-require 'orion/inventory'
-require 'orion/order'
-require 'orion/tracking'
-require 'orion/user'
+require 'mge_wholesale/base'
+require 'mge_wholesale/catalog'
+require 'mge_wholesale/category'
+require 'mge_wholesale/inventory'
+require 'mge_wholesale/order'
+require 'mge_wholesale/tracking'
+require 'mge_wholesale/user'
 
-module Orion
+module MgeWholesale
   class InvalidOrder < StandardError; end
   class NotAuthenticated < StandardError; end
   class FileOrDirectoryNotFound < StandardError; end
