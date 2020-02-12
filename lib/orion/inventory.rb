@@ -1,4 +1,4 @@
-module MgeWholesale
+module Orion
   class Inventory < Base
 
     INVENTORY_FILENAME = 'exportXML_cq_barcodeFFL.csv'.freeze

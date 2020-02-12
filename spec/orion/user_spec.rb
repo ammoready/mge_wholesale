@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe MgeWholesale::User do
+describe Orion::User do
 
   describe '#new' do
     it 'is invalid without the required options' do
-      expect { MgeWholesale::User.new }.to raise_error(ArgumentError)
+      expect { Orion::User.new }.to raise_error(ArgumentError)
     end
   end
 
@@ -17,7 +17,7 @@ describe MgeWholesale::User do
       allow(ftp).to receive(:close)
     end
 
-    it { expect(MgeWholesale::User.new(username: 'usr', password: 'pass').authenticated?).to eq(true) }
+    it { expect(Orion::User.new(username: 'usr', password: 'pass').authenticated?).to eq(true) }
   end
 
 end

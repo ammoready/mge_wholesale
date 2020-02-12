@@ -1,4 +1,4 @@
-module MgeWholesale
+module Orion
   # To submit an order:
   #
   # * Instantiate a new Order, passing in `:username`
@@ -68,7 +68,7 @@ module MgeWholesale
     def filename
       return @filename if defined?(@filename)
       timestamp = Time.now.strftime('%Y%m%d%T').gsub(':', '')
-      @filename = "MGE-#{@po_number}-#{timestamp}.csv"
+      @filename = "ORION-#{@po_number}-#{timestamp}.csv"
     end
 
     def to_csv
