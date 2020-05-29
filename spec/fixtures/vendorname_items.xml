@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <item>
+    <name>Hello</name>
+    <barcod>100000000011</barcod>
+    <id>A12300011</id>
+    <qty>10.000</qty>
+    <price>100.99</price>
+    <description>This is a great item</description>
+    <vendorItemNo>A12300011</vendorItemNo>
+    <Weight></Weight>
+    <Brand>Smuger</Brand>
+    <Caliber></Caliber>
+    <Magnifactaion></Magnifactaion>
+    <FIELD12></FIELD12>
+  </item>
+  <item>
+    <name>Hello 2</name>
+    <barcod>100000000012</barcod>
+    <id>A12300012</id>
+    <qty>10.000</qty>
+    <price>200.99</price>
+    <description>This is a great item</description>
+    <vendorItemNo>A12300012</vendorItemNo>
+    <Weight></Weight>
+    <Brand>Smuger</Brand>
+    <Caliber></Caliber>
+    <Magnifactaion>10x</Magnifactaion>
+    <FIELD12></FIELD12>
+  </item>
+</root>
